@@ -28,6 +28,25 @@ namespace WebApp1.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        public async Task<IActionResult> PorCategoria(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var applicationDbContext = _context.Despesa.
+                    Include(d => d.Categoria)
+                    .Where(c => c.CategoriaId == id);
+
+            if (applicationDbContext == null)
+            {
+                return NotFound();
+            }
+
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Despesas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
